@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.routers import todo
 from app.database import init_db
+import app.models  # Import all models to ensure they're registered
 
 app = FastAPI(
     title="Todo App API",
