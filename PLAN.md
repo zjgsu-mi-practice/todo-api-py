@@ -70,7 +70,7 @@ This document outlines the plan for creating the Python Todo API project.
 
 **6. Proposed Structure Diagram:**
 
-```mermaid
+```{mermaid}
 graph TD
     A[todo-api-py] --> B(pyproject.toml);
     A --> C(README.md);
@@ -100,3 +100,4 @@ graph TD
     L --> L3(tags.py);
     L --> L4(reminders.py);
     L --> L5(memos.py);
+```
