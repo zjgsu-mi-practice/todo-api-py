@@ -10,6 +10,7 @@ from app.schemas.todo import TodoCreate, TodoUpdate, TodoInDB, PaginatedResponse
 
 router = APIRouter(prefix="/todos", tags=["todos"])
 
+@router.get("", response_model=PaginatedResponse)
 @router.get("/", response_model=PaginatedResponse)
 async def list_todos(
     status: Optional[str] = Query(None, pattern="^(pending|in_progress|completed)$"),
@@ -48,9 +49,9 @@ async def list_todos(
         }
     )
 
+@router.post("", response_model=TodoInDB, status_code=201)
 @router.post("/", response_model=TodoInDB, status_code=201)
 async def create_todo(todo: TodoCreate, db: AsyncSession = Depends(get_db)):
-    print(todo.model_dump())
     db_todo = Todo(**todo.model_dump())
     db.add(db_todo)
     await db.commit()
