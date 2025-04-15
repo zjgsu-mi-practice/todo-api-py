@@ -3,7 +3,6 @@ from pydantic import BaseModel, Field
 from typing import Optional
 
 class ReminderBase(BaseModel):
-    todo_id: str
     time: datetime
     notify_method: str = Field(default="push", pattern="^(email|push|sms)$")
 
@@ -16,6 +15,7 @@ class ReminderUpdate(ReminderBase):
 
 class ReminderInDB(ReminderBase):
     id: str
+    todo_id: str
 
     class Config:
         from_attributes = True 

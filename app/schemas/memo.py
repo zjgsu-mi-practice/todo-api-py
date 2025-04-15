@@ -3,7 +3,7 @@ from pydantic import BaseModel, Field, HttpUrl
 
 class MemoBase(BaseModel):
     content: str
-    attachments: Optional[List[HttpUrl]] = None
+    attachments: Optional[List[str]] = None
 
 class MemoCreate(MemoBase):
     pass

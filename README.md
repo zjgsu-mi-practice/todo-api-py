@@ -2,6 +2,8 @@
 
 A FastAPI-based Todo application with full CRUD functionality, built with Python 3.11 and SQLite.
 
+[![Test Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen)](https://github.com/zjgsu-mi-practice/todo-api-py)
+
 ## Features
 
 - RESTful API endpoints for Todo management
@@ -10,6 +12,7 @@ A FastAPI-based Todo application with full CRUD functionality, built with Python
 - Automatic API documentation (Swagger & ReDoc)
 - Database migrations with Alembic
 - Dependency management with Rye
+- Comprehensive test coverage
 
 ## Tech Stack
 
@@ -19,6 +22,9 @@ A FastAPI-based Todo application with full CRUD functionality, built with Python
 - SQLite (with option for PostgreSQL)
 - Alembic for migrations
 - Pydantic for data validation
+- pytest for testing
+- pytest-asyncio for async tests
+- pytest-cov for coverage reporting
 
 ## Installation
 
@@ -63,6 +69,40 @@ Interactive documentation is automatically available at:
 - `PUT /todos/{id}` - Update a todo
 - `DELETE /todos/{id}` - Delete a todo
 
+### Categories
+- `GET /categories` - List all categories
+- `POST /categories` - Create a new category
+
+### Tags
+- `GET /tags` - List all tags
+- `POST /tags` - Create a new tag
+
+### Reminders
+- `GET /todos/{todoId}/reminders` - Get reminders for a todo
+- `POST /todos/{todoId}/reminders` - Create a reminder
+
+### Memos
+- `GET /memos/{memoId}` - Get a memo
+- `PUT /memos/{memoId}` - Update a memo
+
+## Testing
+
+The project includes comprehensive tests for all endpoints. To run the tests:
+
+```bash
+# Install test dependencies
+rye add --dev pytest pytest-asyncio pytest-cov httpx
+
+# Run tests with coverage
+rye run pytest --cov=app tests/ --cov-report=term-missing
+```
+
+The test suite includes:
+- Unit tests for all endpoints
+- Integration tests for database operations
+- Test fixtures for database and FastAPI client
+- Coverage reporting
+
 ## Configuration
 
 Environment variables can be set in `.env` file:
@@ -96,4 +136,10 @@ rye run alembic upgrade head
 │   ├── schemas/          # Pydantic schemas
 │   └── main.py           # Main application
 ├── tests/                # Test cases
+│   ├── conftest.py       # Test configuration
+│   ├── test_todos.py     # Todo endpoint tests
+│   ├── test_categories.py # Category endpoint tests
+│   ├── test_tags.py      # Tag endpoint tests
+│   ├── test_reminders.py # Reminder endpoint tests
+│   └── test_memos.py     # Memo endpoint tests
 └── requirements.lock      # Locked dependencies

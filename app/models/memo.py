@@ -11,6 +11,7 @@ class Memo(Base):
 
     id = Column(String, primary_key=True, default=lambda: str(uuid4()))
     content = Column(Text, nullable=False)
+    attachments = Column(Text)  # Store as JSON string
     created_at = Column(DateTime, server_default=func.now())
     updated_at = Column(DateTime, onupdate=func.now())
 
