@@ -12,7 +12,7 @@ A FastAPI-based Todo application with full CRUD functionality, built with Python
 - JWT authentication (to be implemented)
 - Automatic API documentation (Swagger & ReDoc)
 - Database migrations with Alembic
-- Dependency management with Rye
+- Dependency management with uv
 - Comprehensive test coverage
 
 ## Tech Stack
@@ -35,21 +35,26 @@ git clone https://github.com/zjgsu-mi-practice/todo-api-py.git
 cd todo-api-py
 ```
 
-2. Install dependencies using Rye:
+2. Install dependencies using uv:
 ```bash
-rye sync
+uv pip install -e ".[dev]"
+```
+
+Alternatively, you can use pip with the requirements files:
+```bash
+pip install -r requirements-dev.txt
 ```
 
 3. Set up database:
 ```bash
-rye run alembic upgrade head
+python -m alembic upgrade head
 ```
 
 ## Running the Application
 
 Start the development server:
 ```bash
-rye run uvicorn main:app --reload
+python -m uvicorn main:app --reload
 ```
 
 The API will be available at:
@@ -91,11 +96,11 @@ Interactive documentation is automatically available at:
 The project includes comprehensive tests for all endpoints. To run the tests:
 
 ```bash
-# Install test dependencies
-rye add --dev pytest pytest-asyncio pytest-cov httpx
+# Install test dependencies (if not already installed)
+uv pip install -e ".[dev]"
 
 # Run tests with coverage
-rye run pytest --cov=app tests/ --cov-report=term-missing
+python -m pytest --cov=app tests/ --cov-report=term-missing
 ```
 
 The test suite includes:
@@ -119,13 +124,13 @@ ACCESS_TOKEN_EXPIRE_MINUTES=30
 
 ### Running Tests
 ```bash
-rye run pytest
+python -m pytest
 ```
 
 ### Creating Migrations
 ```bash
-rye run alembic revision --autogenerate -m "migration_message"
-rye run alembic upgrade head
+python -m alembic revision --autogenerate -m "migration_message"
+python -m alembic upgrade head
 ```
 
 ## Continuous Integration
@@ -154,4 +159,6 @@ This project uses GitHub Actions for continuous integration:
 │   ├── test_tags.py      # Tag endpoint tests
 │   ├── test_reminders.py # Reminder endpoint tests
 │   └── test_memos.py     # Memo endpoint tests
-└── requirements.lock      # Locked dependencies
+├── pyproject.toml        # Project configuration and dependencies
+├── requirements.txt      # Production dependencies
+└── requirements-dev.txt  # Development dependencies
