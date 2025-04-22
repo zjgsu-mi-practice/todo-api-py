@@ -18,20 +18,24 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v5
+    - name: Install and configure uv (incl. Python)
+      uses: astral-sh/setup-uv-action@v1
       with:
         python-version: ${{ matrix.python-version }}
 
-    - name: Install uv
-      shell: bash
-      run: |
-        curl -LsSf https://astral.sh/uv/install.sh | sh
-        echo "$HOME/.local/bin" >> $GITHUB_PATH
+    - name: Cache uv dependencies
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/uv # Cache directory used by uv
+        # Use uv.lock for the primary cache key for precise dependency matching
+        key: ${{ runner.os }}-python-${{ matrix.python-version }}-uv-${{ hashFiles('uv.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-python-${{ matrix.python-version }}-uv-
 
     - name: Install dependencies
       run: |
-        uv pip install -e ".[dev]"
+        uv sync --all-extras # Install dependencies from uv.lock, including extras
+        uv pip install -e .  # Install the current package in editable mode
 
     - name: Run tests
       run: |
@@ -41,5 +45,5 @@ jobs:
       uses: codecov/codecov-action@v4
       with:
         file: ./coverage.xml
-        fail_ci_if_error: false
-        token: ${{ secrets.CODECOV_TOKEN }}
+        fail_ci_if_error: true # Fail CI if Codecov upload fails
+        token: ${{ secrets.CODECOV_TOKEN }} # Keep token for private repos or if not using Codecov GitHub App

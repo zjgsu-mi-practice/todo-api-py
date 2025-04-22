@@ -139,7 +139,8 @@ This project uses GitHub Actions for continuous integration:
 
 - Automated tests run on every push and pull request
 - Tests run on multiple operating systems (Ubuntu, macOS, Windows)
-- Tests run on multiple Python versions (3.8, 3.9, 3.10, 3.11)
+- Tests run on multiple Python versions (3.9, 3.10, 3.11)
+- Uses the official uv action with dependency caching for faster builds
 - Code coverage is reported to Codecov
 
 ## Project Structure
