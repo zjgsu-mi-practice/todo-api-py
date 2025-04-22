@@ -8,3 +8,11 @@ wheels/
 
 # venv
 .venv
+
+# coverage reports
+.coverage
+coverage.xml
+htmlcov/
+
+# sqlite database
+*.db

@@ -2,7 +2,8 @@
 
 A FastAPI-based Todo application with full CRUD functionality, built with Python 3.11 and SQLite.
 
-[![Test Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen)](https://github.com/zjgsu-mi-practice/todo-api-py)
+[![Tests](https://github.com/zjgsu-mi-practice/todo-api-py/actions/workflows/tests.yml/badge.svg)](https://github.com/zjgsu-mi-practice/todo-api-py/actions/workflows/tests.yml)
+[![codecov](https://codecov.io/gh/zjgsu-mi-practice/todo-api-py/branch/main/graph/badge.svg)](https://codecov.io/gh/zjgsu-mi-practice/todo-api-py)
 
 ## Features
 
@@ -103,6 +104,8 @@ The test suite includes:
 - Test fixtures for database and FastAPI client
 - Coverage reporting
 
+Tests are automatically run via GitHub Actions on every push to the repository. See the [GitHub Actions workflow](.github/workflows/tests.yml) for details.
+
 ## Configuration
 
 Environment variables can be set in `.env` file:
@@ -124,6 +127,15 @@ rye run pytest
 rye run alembic revision --autogenerate -m "migration_message"
 rye run alembic upgrade head
 ```
+
+## Continuous Integration
+
+This project uses GitHub Actions for continuous integration:
+
+- Automated tests run on every push and pull request
+- Tests run on multiple operating systems (Ubuntu, macOS, Windows)
+- Tests run on multiple Python versions (3.8, 3.9, 3.10, 3.11)
+- Code coverage is reported to Codecov
 
 ## Project Structure
 ```
